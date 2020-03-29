@@ -210,6 +210,15 @@ master:
   # - name: BuildInfoProxy
   #   port: 9000
 
+  # Creates pv & pvc for jenkins plugins to avoid downloading each time pod restarts
+  plugins:
+    persistence:
+      enabled: false
+      storageClass:
+      annotations: {}
+      claimName:
+      size: "1Gi"
+
   # List of plugins to be install during Jenkins master start
   installPlugins:
     - kubernetes:1.24.1

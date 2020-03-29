@@ -345,7 +345,12 @@ spec:
 {{ tpl (toYaml .Values.persistence.volumes | indent 6) . }}
 {{- end }}
       - name: plugins
+{{- if .Values.master.plugins.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.master.plugins.persistence.claimName | default (printf "%s-%s" (include "jenkins.fullname" .) "plugins") }}
+{{- else }}
         emptyDir: {}
+{{- end }}
       - name: tmp
         emptyDir: {}
       - name: jenkins-config
